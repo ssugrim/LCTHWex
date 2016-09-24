@@ -102,12 +102,14 @@ void test_sorting(int *numbers, int count, compare_cb cmp)
 
     free(sorted);
 
+	/*
     unsigned char *data = (unsigned char * ) cmp;
     for (i = 0; i < 25; i++){
         printf("%02x:", data[i]);
     }
 
     printf("\n");
+	*/
 }
 
 int main(int argc, char *argv[])
@@ -133,7 +135,8 @@ int main(int argc, char *argv[])
         numbers[i] = atoi(inputs[i]);
     }
 
-    test_sorting(numbers, count, NULL);
+    //test_sorting(numbers, count, NULL);
+    test_sorting(numbers, count, sorted_order);
     test_sorting(numbers, count, reverse_order);
     test_sorting(numbers, count, strange_order);
 
