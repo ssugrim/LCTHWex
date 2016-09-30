@@ -19,7 +19,11 @@ typedef LIST_HEAD(listhead, twoint) head_td;
 
 int main(int argc, char * argv[]){
 
-    head_td *head = malloc(sizeof(head_td)); //create a local copy of the list head
+    /*
+    I'm heap allocating this, but I could just as easily stack allocated it
+    if I'm passing it to lower contexts.
+    */
+    head_td *head = malloc(sizeof(head_td));
 
     LIST_INIT(head); //Setup the head pointers
 
