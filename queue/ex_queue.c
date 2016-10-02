@@ -60,7 +60,7 @@ int main(int argc, char * argv[]){
     */
     np = head->lh_first;
     LIST_REMOVE(head->lh_first, twointp);
-    free(np);
+//   free(np);
 
     np = head->lh_first;
 
@@ -72,7 +72,7 @@ int main(int argc, char * argv[]){
 
     np = head->lh_first;
     LIST_REMOVE(head->lh_first, twointp);
-    free(np);
+//    free(np);
 
     np = head->lh_first;
     printf("List should be empty now\n");
