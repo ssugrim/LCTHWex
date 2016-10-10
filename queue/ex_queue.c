@@ -9,13 +9,13 @@ can later refer to it using the def'ed name
 typedef struct twoint {
         int a;
         int b;
-        LIST_ENTRY(twoint) twointp;
+        TAILQ_ENTRY(twoint) twointp;
 } twoint_td;
 
 /* 
 Not strictly required, but I typedef the list head type also. 
 */
-typedef LIST_HEAD(listhead, twoint) head_td;
+typedef TAILQ_HEAD(listhead, twoint) head_td;
 
 int main(int argc, char * argv[]){
 
@@ -25,7 +25,7 @@ int main(int argc, char * argv[]){
     */
     head_td *head = malloc(sizeof(head_td));
 
-    LIST_INIT(head); //Setup the head pointers
+    TAILQ_INIT(head); //Setup the head pointers
 
     /* 
     Here I create a new item. I used the Insert head macro to patch up
@@ -34,7 +34,7 @@ int main(int argc, char * argv[]){
     twoint_td *n1 = malloc(sizeof(twoint_td)); 
     n1->a = 1;
     n1->b = 1;
-    LIST_INSERT_HEAD(head, n1, twointp);
+    TAILQ_INSERT_HEAD(head, n1, twointp);
 
     /*
     made a second item and added it to the list
@@ -42,41 +42,41 @@ int main(int argc, char * argv[]){
     twoint_td *n2 = malloc(sizeof(twoint_td));
     n2->a = 2;
     n2->b = 2;
-    LIST_INSERT_HEAD(head, n2, twointp);
+    TAILQ_INSERT_HEAD(head, n2, twointp);
 
     /*
     dummy pointer for interation, initlized to first element of list
     */
-    twoint_td *np = head->lh_first;
+    twoint_td *np = head->tqh_first;
 
-    for(;np != NULL; np = np->twointp.le_next){ // list iteration
+    for(;np != NULL; np = np->twointp.tqe_next){ // list iteration
         printf("a:%d\n",np->a);
         printf("b:%d\n",np->b);
     }
 
     /*
-    Get a pointer to the first element, remove it from the list and free 
+    Get a pointer to the first eement, remove it from the list and free 
     the memory. Valgrind should show one less leak
     */
-    np = head->lh_first;
-    LIST_REMOVE(head->lh_first, twointp);
+    np = head->tqh_first;
+    TAILQ_REMOVE(head, head->tqh_first, twointp);
 //   free(np);
 
-    np = head->lh_first;
+    np = head->tqh_first;
 
-    for(;np != NULL; np = np->twointp.le_next){
+    for(;np != NULL; np = np->twointp.tqe_next){
         printf("a:%d\n",np->a);
         printf("b:%d\n",np->b);
     }
 
 
-    np = head->lh_first;
-    LIST_REMOVE(head->lh_first, twointp);
+    np = head->tqh_first;
+    TAILQ_REMOVE(head, head->tqh_first, twointp);
 //    free(np);
 
-    np = head->lh_first;
+    np = head->tqh_first;
     printf("List should be empty now\n");
-    for(;np != NULL; np = np->twointp.le_next){
+    for(;np != NULL; np = np->twointp.tqe_next){
         printf("a:%d\n",np->a);
         printf("b:%d\n",np->b);
     }
