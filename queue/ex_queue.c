@@ -34,7 +34,7 @@ int main(int argc, char * argv[]){
     twoint_td *n1 = malloc(sizeof(twoint_td)); 
     n1->a = 1;
     n1->b = 1;
-    TAILQ_INSERT_HEAD(head, n1, twointp);
+    TAILQ_INSERT_TAIL(head, n1, twointp);
 
     /*
     made a second item and added it to the list
@@ -42,7 +42,7 @@ int main(int argc, char * argv[]){
     twoint_td *n2 = malloc(sizeof(twoint_td));
     n2->a = 2;
     n2->b = 2;
-    TAILQ_INSERT_HEAD(head, n2, twointp);
+    TAILQ_INSERT_TAIL(head, n2, twointp);
 
     /*
     dummy pointer for interation, initlized to first element of list
@@ -59,29 +59,18 @@ int main(int argc, char * argv[]){
     the memory. Valgrind should show one less leak
     */
     np = head->tqh_first;
+    printf("First is now\n");
+    printf("a:%d\n",np->a);
+    printf("b:%d\n",np->b);
     TAILQ_REMOVE(head, head->tqh_first, twointp);
 //   free(np);
 
     np = head->tqh_first;
-
-    for(;np != NULL; np = np->twointp.tqe_next){
-        printf("a:%d\n",np->a);
-        printf("b:%d\n",np->b);
-    }
-
-
-    np = head->tqh_first;
+    printf("First is now\n");
+    printf("a:%d\n",np->a);
+    printf("b:%d\n",np->b);
     TAILQ_REMOVE(head, head->tqh_first, twointp);
-//    free(np);
 
-    np = head->tqh_first;
-    printf("List should be empty now\n");
-    for(;np != NULL; np = np->twointp.tqe_next){
-        printf("a:%d\n",np->a);
-        printf("b:%d\n",np->b);
-    }
-
-    free(head);
 
     printf("Done\n");
 }
