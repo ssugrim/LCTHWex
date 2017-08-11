@@ -1,0 +1,3 @@
+gcc -g -Wall -c mylib.c -o mylib.o  // This build the object file that will be linked in the next step
+                                    // the -c flag tells the complier not to try to link this to something
+gcc -g -Wall libex.c mylib.o -o libex // this will build the exectuable, the .o file will get linked in
