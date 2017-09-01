@@ -64,7 +64,7 @@ int main (){
     /*
      * Iterate over the list forwards
      */
-
+    std::cout << "Forward Iteration" << std::endl;
     for (const pkt_time& t : window) //rangebased interation with const reference
         std::cout << "Seq " << t.seq << " Dur " << t.dur << std::endl;
 
@@ -72,8 +72,10 @@ int main (){
      * Truncate upto a value
      */
 
-    while (window.back().seq - window.front().seq > 3) //truncate the list
-        window.pop_front();
+//    while (window.back().seq - window.front().seq > 3) //truncate the list
+//        window.pop_front();
+    std::cout << "Truncate if sequence number is further than 3 from max" << std::endl;
+    window.remove_if([&window](pkt_time& t) {return window.back().seq - t.seq > 3;});
 
     std::cout << "Front " << window.front().seq << std::endl;
     std::cout << "Back " << window.back().seq << std::endl;
@@ -82,8 +84,8 @@ int main (){
      * Iterate over the list backwards
      */
 
-
+    std::cout << "Reverse Iteration after truncation" << std::endl;
     for (auto t = window.rbegin(); t != window.rend(); ++t) // iterate backwards
-        std::cout << "Seq " << t->seq << std::endl;
+        std::cout << "Seq " << t->seq << " Dur " << t->dur << std::endl;
 }
 
